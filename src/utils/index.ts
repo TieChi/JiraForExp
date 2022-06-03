@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-export const isFasly = (value) => (value === 0 ? false : !value);
+export const isFasly = (value: unknown) => (value === 0 ? false : !value);
 
 export const cleanObject = (object) => {
   const result = { ...object };
@@ -13,13 +13,13 @@ export const cleanObject = (object) => {
   return result;
 };
 
-export const useMount = (callback) => {
+export const useMount = (callback: () => void) => {
   useEffect(() => {
     callback();
   }, []);
 };
 
-export const useDebounce = (value, delay) => {
+export const useDebounce = (value: string, delay: number) => {
   const [debouncedValue, setDebouncedValue] = useState(value);
   useEffect(() => {
     const timeout = setTimeout(() => {
