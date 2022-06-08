@@ -1,7 +1,11 @@
 import { useState, useEffect } from "react";
 export const isFasly = (value: unknown) => (value === 0 ? false : !value);
 
-export const cleanObject = (object) => {
+export const cleanObject = (object: {
+  [x: string]: any;
+  name?: string;
+  personId?: string;
+}) => {
   const result = { ...object };
   Object.keys(object).forEach((key) => {
     const value = object[key];
