@@ -2,6 +2,7 @@ import { ProjectListScreen } from "screens/project-list";
 import { useAuth } from "context/auth-context";
 import styled from "@emotion/styled";
 import { Row } from "components/lib";
+import Logo from "assets/LogoSoftware.png";
 
 export const AuthenticatedApp = () => {
   const { logout } = useAuth();
@@ -9,11 +10,10 @@ export const AuthenticatedApp = () => {
     <Container>
       <Header between={true}>
         <HeaderLeft gap={true}>
-          <h3>Logo</h3>
+          <img src={Logo}></img>
           <h3>项目</h3>
           <h3>用户</h3>
         </HeaderLeft>
-
         <HeaderRight>
           <button onClick={logout}>登出</button>
         </HeaderRight>
@@ -27,10 +27,6 @@ export const AuthenticatedApp = () => {
     </Container>
   );
 };
-
-// const HeaderItem = styled.h3`
-//   margin-right: 3rem;
-// `
 
 const Container = styled.div`
   display: grid;
