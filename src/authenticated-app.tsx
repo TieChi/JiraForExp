@@ -3,19 +3,30 @@ import { useAuth } from "context/auth-context";
 import styled from "@emotion/styled";
 import { Row } from "components/lib";
 import Logo from "assets/LogoSoftware.png";
+import { Dropdown, Menu } from "antd";
 
 export const AuthenticatedApp = () => {
-  const { logout } = useAuth();
+  const { logout, user } = useAuth();
   return (
     <Container>
       <Header between={true}>
         <HeaderLeft gap={true}>
-          <img src={Logo}></img>
+          <LogoImg src={Logo} alt="" />
           <h3>项目</h3>
           <h3>用户</h3>
         </HeaderLeft>
         <HeaderRight>
-          <button onClick={logout}>登出</button>
+          <Dropdown
+            overlay={
+              <Menu>
+                <Menu.Item key={"logout"}>
+                  <a onClick={logout}>登出</a>
+                </Menu.Item>
+              </Menu>
+            }
+          >
+            <a onClick={(e) => e.preventDefault()}>Hi, {user?.name}</a>
+          </Dropdown>
         </HeaderRight>
       </Header>
       {/* <Nav>nav</Nav> */}
@@ -33,7 +44,14 @@ const Container = styled.div`
   grid-template-rows: 6rem 1fr;
   height: 100vh;
 `;
-const Header = styled(Row)``;
+const LogoImg = styled.img`
+  width: 18rem;
+`;
+const Header = styled(Row)`
+  padding: 3.2rem;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  z-index: 1;
+`;
 const HeaderLeft = styled(Row)``;
 const HeaderRight = styled.div``;
 
