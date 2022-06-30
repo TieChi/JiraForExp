@@ -1,11 +1,11 @@
-import { useState, useEffect } from "react";
-import { cleanObject, useDebounce } from "../../utils/index";
-import { useMount } from "../../utils/index";
+import { useState } from "react";
+import { useDebounce } from "../../utils/index";
+import { useProjects } from "../../utils/project";
 import { SearchPanel } from "./search-panel";
 import { List } from "./list";
-import { useHttp } from "utils/http";
 import styled from "@emotion/styled";
 import { Typography } from "antd";
+import { useUsers } from "utils/user";
 
 export const ProjectListScreen = () => {
   const [param, setParam] = useState({
@@ -13,35 +13,17 @@ export const ProjectListScreen = () => {
     personId: "",
   });
   const debounceParam = useDebounce(param, 1000);
-  const [users, setUsers] = useState([]);
-  const [list, setList] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<null | Error>(null);
-  const client = useHttp();
+  const { isLoading, error, data: list } = useProjects(debounceParam);
+  const { data: users } = useUsers();
 
-  useEffect(() => {
-    setIsLoading(true);
-    client("projects", { data: cleanObject(debounceParam) })
-      .then(setList)
-      .catch((error) => {
-        setList([]);
-        setError(error);
-      })
-      .finally(() => setIsLoading(false));
-    // eslint-disable-next-line
-  }, [debounceParam]);
-
-  useMount(() => {
-    client("users").then(setUsers);
-  });
   return (
     <Container>
       <h1>项目列表</h1>
-      <SearchPanel param={param} setParam={setParam} users={users} />
+      <SearchPanel param={param} setParam={setParam} users={users || []} />
       {error ? (
         <Typography.Text type={"danger"}>{error.message}</Typography.Text>
       ) : null}
-      <List loading={isLoading} dataSource={list} users={users} />
+      <List loading={isLoading} dataSource={list || []} users={users || []} />
     </Container>
   );
 };
