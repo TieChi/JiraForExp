@@ -2,14 +2,14 @@ import { Table, TableProps } from "antd";
 import dayjs from "dayjs";
 
 export interface Item {
-  id: number;
+  id: string;
   name: string;
-  personId: number;
+  personId: number | string;
   organization: string;
   created: number;
 }
 interface User {
-  id: number;
+  id: number | string;
   name: string;
 }
 interface ListProps extends TableProps<Item> {
@@ -31,7 +31,7 @@ export const List = ({ users, ...props }: ListProps) => {
         },
         {
           title: "负责人",
-          render(value: any, project: { personId: number }) {
+          render(value: any, project: { personId: number | string }) {
             return (
               <span>
                 {users.find((user) => user.id === project.personId)?.name ||
