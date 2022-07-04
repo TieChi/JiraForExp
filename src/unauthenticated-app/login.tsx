@@ -15,7 +15,7 @@ export const LoginScreen = ({
   }) => {
     try {
       await login(values);
-    } catch (e) {
+    } catch (e: any) {
       onError(e);
     }
   };

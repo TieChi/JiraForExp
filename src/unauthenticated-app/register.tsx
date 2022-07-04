@@ -15,7 +15,7 @@ export const RegisterScreen = ({
   }) => {
     try {
       await register(values);
-    } catch (e) {
+    } catch (e: any) {
       onError(e);
     }
   };
