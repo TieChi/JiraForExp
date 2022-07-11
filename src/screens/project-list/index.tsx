@@ -10,17 +10,14 @@ import { useDocumentTitle } from "utils";
 import { useUrlQueryParam } from "utils/url";
 
 export const ProjectListScreen = () => {
-  const [param, setParam] = useState({
-    name: "",
-    personId: "",
-  });
+  // const [keys] = useState<('name' | 'personId')[]>();
+  const [param, setParam] = useUrlQueryParam(["name", "personId"]);
+
   const debounceParam = useDebounce(param, 1000);
   const { isLoading, error, data: list } = useProjects(debounceParam);
   const { data: users } = useUsers();
 
   useDocumentTitle("项目列表", false);
-
-  // const param = useUrlQueryParam(['name', 'personId'])
 
   return (
     <Container>
