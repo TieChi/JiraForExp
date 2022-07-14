@@ -10,7 +10,7 @@ import { useDocumentTitle } from "utils";
 import { useUrlQueryParam } from "utils/url";
 
 export const ProjectListScreen = () => {
-  // const [keys] = useState<('name' | 'personId')[]>();
+  const [keys] = useState<("name" | "personId")[]>();
   const [param, setParam] = useUrlQueryParam(["name", "personId"]);
 
   const debounceParam = useDebounce(param, 1000);
