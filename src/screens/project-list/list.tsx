@@ -1,17 +1,14 @@
 import { Table, TableProps } from "antd";
 import dayjs from "dayjs";
 import { Link } from "react-router-dom";
+import { User } from "./search-panel";
 
 export interface Item {
-  id: string;
+  id: number;
   name: string;
-  personId: number | string;
+  personId: number;
   organization: string;
   created: number;
-}
-interface User {
-  id: number | string;
-  name: string;
 }
 interface ListProps extends TableProps<Item> {
   users: User[];

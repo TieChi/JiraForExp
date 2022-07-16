@@ -1,6 +1,7 @@
 /** @jsxImportSource @emotion/react */
 // import {jsx} from "@emotion/react";
 import { Form, Input, Select } from "antd";
+import { Item } from "./list";
 
 export interface User {
   id: number;
@@ -12,10 +13,7 @@ export interface User {
 }
 interface SearchPanelProps {
   users: User[];
-  param: {
-    name: string;
-    personId: string;
-  };
+  param: Partial<Pick<Item, "name" | "personId">>;
   setParam: (param: SearchPanelProps["param"]) => void;
 }
 
