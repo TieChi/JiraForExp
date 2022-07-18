@@ -1,6 +1,7 @@
 /** @jsxImportSource @emotion/react */
 // import {jsx} from "@emotion/react";
 import { Form, Input, Select } from "antd";
+import { UserSelect } from "components/user-select";
 import { Item } from "./list";
 
 export interface User {
@@ -34,7 +35,17 @@ export const SearchPanel = ({ param, setParam, users }: SearchPanelProps) => {
         />
       </Form.Item>
       <Form.Item>
-        <Select
+        <UserSelect
+          defaultOptionName={"负责人"}
+          value={param.personId}
+          onChange={(value) =>
+            setParam({
+              ...param,
+              personId: value,
+            })
+          }
+        />
+        {/* <Select
           placeholder={""}
           value={param.personId}
           onChange={(value) =>
@@ -50,7 +61,7 @@ export const SearchPanel = ({ param, setParam, users }: SearchPanelProps) => {
               {user.name}
             </Select.Option>
           ))}
-        </Select>
+        </Select> */}
       </Form.Item>
     </Form>
   );
