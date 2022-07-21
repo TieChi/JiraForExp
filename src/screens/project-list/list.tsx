@@ -3,6 +3,7 @@ import dayjs from "dayjs";
 import { Link } from "react-router-dom";
 import { User } from "./search-panel";
 import { Pin } from "./pin";
+import { useEditProject } from "utils/project";
 
 export interface Item {
   id: number;
@@ -16,6 +17,8 @@ interface ListProps extends TableProps<Item> {
   users: User[];
 }
 export const List = ({ users, ...props }: ListProps) => {
+  const { mutate } = useEditProject();
+  const pinProject = (id: number) => (pin: boolean) => mutate({ id, pin });
   return (
     <Table
       pagination={false}
@@ -24,7 +27,12 @@ export const List = ({ users, ...props }: ListProps) => {
         {
           title: <Pin checked={true} disabled={true}></Pin>,
           render(value, project) {
-            return <Pin checked={project?.pin} />;
+            return (
+              <Pin
+                checked={project?.pin}
+                onCheckedChange={pinProject(project.id)}
+              />
+            );
           },
         },
         {
