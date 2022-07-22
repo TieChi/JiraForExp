@@ -40,7 +40,6 @@ export const useAddProject = () => {
   const { run, ...asyncResult } = useAsync();
   const client = useHttp();
   const mutate = (params: Partial<Item>) => {
-    console.log(12);
     return run(
       client(`projects/${params.id}`, {
         data: params,

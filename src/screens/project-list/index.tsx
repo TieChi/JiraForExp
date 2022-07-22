@@ -15,6 +15,7 @@ export const ProjectListScreen = () => {
     isLoading,
     error,
     data: list,
+    retry,
   } = useProjects(useDebounce(param, 1000));
   const { data: users } = useUsers();
 
