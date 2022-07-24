@@ -9,8 +9,13 @@ export const useProjects = (param?: Partial<Item>) => {
 
   const { run, ...result } = useAsync<Item[]>();
 
+  const fetchProjects = () =>
+    client("projects", { data: cleanObject(param || {}) });
+
   useEffect(() => {
-    run(client("projects", { data: cleanObject(param || {}) }));
+    run(fetchProjects(), {
+      retry: fetchProjects,
+    });
 
     // eslint-disable-next-line
   }, [param]);
