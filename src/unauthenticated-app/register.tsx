@@ -1,6 +1,7 @@
 import { useAuth } from "context/auth-context";
 import { Form, Input } from "antd";
 import { LongButton } from "unauthenticated-app";
+import { useAsync } from "utils/use-async";
 
 export const RegisterScreen = ({
   onError,
@@ -8,13 +9,14 @@ export const RegisterScreen = ({
   onError: (error: Error) => void;
 }) => {
   const { register } = useAuth();
+  const { run, isLoading } = useAsync(undefined, { throwOnError: true });
 
   const handleSubmit = async (values: {
     username: string;
     password: string;
   }) => {
     try {
-      await register(values);
+      await run(register(values));
     } catch (e: any) {
       onError(e);
     }
@@ -34,7 +36,7 @@ export const RegisterScreen = ({
         <Input placeholder={"密码"} type="text" id={"password"} />
       </Form.Item>
       <Form.Item>
-        <LongButton htmlType={"submit"} type={"primary"}>
+        <LongButton htmlType={"submit"} type={"primary"} loading={isLoading}>
           注册
         </LongButton>
       </Form.Item>
