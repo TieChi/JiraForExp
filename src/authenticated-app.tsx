@@ -8,8 +8,12 @@ import { Dropdown, Menu, Button } from "antd";
 import { Navigate, Route, Routes } from "react-router";
 import { BrowserRouter as Router } from "react-router-dom";
 import { resetRoute } from "utils";
+import { ProjectModal } from "screens/project-list/project-modal";
+import { useState } from "react";
+import { ProjectPopover } from "components/project-popover";
 
 export const AuthenticatedApp = () => {
+  const [projectModalOpen, setProjectModalOpen] = useState(false);
   return (
     <Container>
       <PageHeader />
@@ -23,6 +27,10 @@ export const AuthenticatedApp = () => {
           </Routes>
         </Router>
       </Main>
+      <ProjectModal
+        projectModalOpen={projectModalOpen}
+        onClose={() => setProjectModalOpen(false)}
+      />
       {/* <Aside>aside</Aside> */}
       {/* <Footer>footer</Footer> */}
     </Container>
@@ -35,10 +43,10 @@ const PageHeader = () => {
   return (
     <Header between={true}>
       <HeaderLeft gap={true}>
-        <Button type="link" onClick={resetRoute}>
+        <Button style={{ padding: 0 }} type="link" onClick={resetRoute}>
           <LogoImg src={Logo} alt="" />
         </Button>
-        <h3>项目</h3>
+        <ProjectPopover />
         <h3>用户</h3>
       </HeaderLeft>
       <HeaderRight>
