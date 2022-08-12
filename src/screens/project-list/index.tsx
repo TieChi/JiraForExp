@@ -4,12 +4,13 @@ import { useProjects } from "../../utils/project";
 import { SearchPanel } from "./search-panel";
 import { List } from "./list";
 import styled from "@emotion/styled";
-import { Typography } from "antd";
+import { Button, Typography } from "antd";
 import { useUsers } from "utils/user";
 import { useDocumentTitle } from "utils";
 import { useProjectParams } from "./util";
+import { Row } from "components/lib";
 
-export const ProjectListScreen = () => {
+export const ProjectListScreen = (props: { projectButton: JSX.Element }) => {
   const [param, setParam] = useProjectParams();
   const {
     isLoading,
@@ -23,12 +24,16 @@ export const ProjectListScreen = () => {
 
   return (
     <Container>
-      <h1>项目列表</h1>
+      <Row between={true}>
+        <h1>项目列表</h1>
+        {props.projectButton}
+      </Row>
       <SearchPanel param={param} setParam={setParam} users={users || []} />
       {error ? (
         <Typography.Text type={"danger"}>{error.message}</Typography.Text>
       ) : null}
       <List
+        projectButton={props.projectButton}
         refresh={retry}
         loading={isLoading}
         dataSource={list || []}

@@ -2,7 +2,7 @@ import { ProjectListScreen } from "screens/project-list";
 import { ProjectScreen } from "screens/project";
 import { useAuth } from "context/auth-context";
 import styled from "@emotion/styled";
-import { Row } from "components/lib";
+import { ButtonNoPadding, Row } from "components/lib";
 import Logo from "assets/LogoSoftware.png";
 import { Dropdown, Menu, Button } from "antd";
 import { Navigate, Route, Routes } from "react-router";
@@ -16,12 +16,35 @@ export const AuthenticatedApp = () => {
   const [projectModalOpen, setProjectModalOpen] = useState(false);
   return (
     <Container>
-      <PageHeader />
+      <PageHeader
+        projectButton={
+          <ButtonNoPadding
+            onClick={() => setProjectModalOpen(true)}
+            type={"link"}
+          >
+            创建项目
+          </ButtonNoPadding>
+        }
+      />
       {/* <Nav>nav</Nav> */}
       <Main>
         <Router>
           <Routes>
-            <Route path="/projects" element={<ProjectListScreen />} />
+            <Route
+              path="/projects"
+              element={
+                <ProjectListScreen
+                  projectButton={
+                    <ButtonNoPadding
+                      onClick={() => setProjectModalOpen(true)}
+                      type={"link"}
+                    >
+                      创建项目
+                    </ButtonNoPadding>
+                  }
+                />
+              }
+            />
             <Route path="/projects/:projectId/*" element={<ProjectScreen />} />
             <Route path={""} element={<Navigate to="projects" />}></Route>
           </Routes>
@@ -37,16 +60,16 @@ export const AuthenticatedApp = () => {
   );
 };
 
-const PageHeader = () => {
+const PageHeader = (props: { projectButton: JSX.Element }) => {
   const { logout, user } = useAuth();
 
   return (
     <Header between={true}>
       <HeaderLeft gap={true}>
-        <Button style={{ padding: 0 }} type="link" onClick={resetRoute}>
+        <ButtonNoPadding type="link" onClick={resetRoute}>
           <LogoImg src={Logo} alt="" />
-        </Button>
-        <ProjectPopover />
+        </ButtonNoPadding>
+        <ProjectPopover {...props} />
         <h3>用户</h3>
       </HeaderLeft>
       <HeaderRight>
