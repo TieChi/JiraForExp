@@ -17,7 +17,6 @@ export interface Item {
 interface ListProps extends TableProps<Item> {
   users: User[];
   refresh?: () => void;
-  projectButton: JSX.Element;
 }
 export const List = ({ users, ...props }: ListProps) => {
   const { mutate } = useEditProject();

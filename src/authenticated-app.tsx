@@ -13,54 +13,27 @@ import { useState } from "react";
 import { ProjectPopover } from "components/project-popover";
 
 export const AuthenticatedApp = () => {
-  const [projectModalOpen, setProjectModalOpen] = useState(false);
   return (
     <Container>
-      <PageHeader
-        projectButton={
-          <ButtonNoPadding
-            onClick={() => setProjectModalOpen(true)}
-            type={"link"}
-          >
-            创建项目
-          </ButtonNoPadding>
-        }
-      />
-      {/* <Nav>nav</Nav> */}
-      <Main>
-        <Router>
+      <Router>
+        <PageHeader />
+        {/* <Nav>nav</Nav> */}
+        <Main>
           <Routes>
-            <Route
-              path="/projects"
-              element={
-                <ProjectListScreen
-                  projectButton={
-                    <ButtonNoPadding
-                      onClick={() => setProjectModalOpen(true)}
-                      type={"link"}
-                    >
-                      创建项目
-                    </ButtonNoPadding>
-                  }
-                />
-              }
-            />
+            <Route path="/projects" element={<ProjectListScreen />} />
             <Route path="/projects/:projectId/*" element={<ProjectScreen />} />
             <Route path={""} element={<Navigate to="projects" />}></Route>
           </Routes>
-        </Router>
-      </Main>
-      <ProjectModal
-        projectModalOpen={projectModalOpen}
-        onClose={() => setProjectModalOpen(false)}
-      />
-      {/* <Aside>aside</Aside> */}
-      {/* <Footer>footer</Footer> */}
+        </Main>
+        <ProjectModal />
+        {/* <Aside>aside</Aside> */}
+        {/* <Footer>footer</Footer> */}
+      </Router>
     </Container>
   );
 };
 
-const PageHeader = (props: { projectButton: JSX.Element }) => {
+const PageHeader = () => {
   const { logout, user } = useAuth();
 
   return (
@@ -69,7 +42,7 @@ const PageHeader = (props: { projectButton: JSX.Element }) => {
         <ButtonNoPadding type="link" onClick={resetRoute}>
           <LogoImg src={Logo} alt="" />
         </ButtonNoPadding>
-        <ProjectPopover {...props} />
+        <ProjectPopover />
         <h3>用户</h3>
       </HeaderLeft>
       <HeaderRight>
