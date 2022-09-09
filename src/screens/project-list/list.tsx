@@ -5,6 +5,7 @@ import { User } from "./search-panel";
 import { Pin } from "./pin";
 import { useEditProject } from "utils/project";
 import { ButtonNoPadding } from "components/lib";
+import { useProjectModal } from "./util";
 
 export interface Item {
   id: number;
@@ -16,12 +17,12 @@ export interface Item {
 }
 interface ListProps extends TableProps<Item> {
   users: User[];
-  refresh?: () => void;
 }
 export const List = ({ users, ...props }: ListProps) => {
   const { mutate } = useEditProject();
-  const pinProject = (id: number) => (pin: boolean) =>
-    mutate({ id, pin }).then(props.refresh);
+  const { startEdit } = useProjectModal();
+  const pinProject = (id: number) => (pin: boolean) => mutate({ id, pin });
+  const editProject = (id: number) => () => startEdit(id);
   return (
     <Table
       pagination={false}
@@ -78,10 +79,10 @@ export const List = ({ users, ...props }: ListProps) => {
               <Dropdown
                 overlay={
                   <Menu>
-                    <Menu.Item key={"edit"}>
+                    <Menu.Item onClick={editProject(project.id)} key={"edit"}>
                       <ButtonNoPadding type={"link"}>编辑</ButtonNoPadding>
                     </Menu.Item>
-                    <Menu.Item>
+                    <Menu.Item key={"delete"}>
                       <ButtonNoPadding type={"link"}>删除</ButtonNoPadding>
                     </Menu.Item>
                   </Menu>

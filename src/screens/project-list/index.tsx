@@ -8,7 +8,7 @@ import { Button, Typography } from "antd";
 import { useUsers } from "utils/user";
 import { useDocumentTitle } from "utils";
 import { useProjectModal, useProjectParams } from "./util";
-import { ButtonNoPadding, Row } from "components/lib";
+import { ButtonNoPadding, ErrorBox, Row } from "components/lib";
 
 export const ProjectListScreen = () => {
   const { open } = useProjectModal();
@@ -17,7 +17,6 @@ export const ProjectListScreen = () => {
     isLoading,
     error,
     data: list,
-    retry,
   } = useProjects(useDebounce(param, 1000));
   const { data: users } = useUsers();
 
@@ -32,15 +31,8 @@ export const ProjectListScreen = () => {
         </ButtonNoPadding>
       </Row>
       <SearchPanel param={param} setParam={setParam} users={users || []} />
-      {error ? (
-        <Typography.Text type={"danger"}>{error.message}</Typography.Text>
-      ) : null}
-      <List
-        refresh={retry}
-        loading={isLoading}
-        dataSource={list || []}
-        users={users || []}
-      />
+      <ErrorBox error={error} />
+      <List loading={isLoading} dataSource={list || []} users={users || []} />
     </Container>
   );
 };
